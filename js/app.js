@@ -1,13 +1,14 @@
 'use strick';
 // array to store all img instances
 PicturesHere.allPictures = [];
+PicturesHere.TotalPicturesClicked = 0;
+PicturesHere.allPictures.imgUsed = [];
 //Make a constructor for img objects
 function PicturesHere(filepath, name){
   this.filepath = filepath;
   this.name = name;
   this.shown = 0;
   this.clicked = 0;
-  this.imgUsed = [];
   PicturesHere.allPictures.push(this);
 }
 
@@ -36,19 +37,55 @@ new PicturesHere('img/cthulhu.jpg', 'cthulhu');
 
 //access the img from DOM (store in var)
 var imgEL = document.getElementById('first-pic');
-// var imgEl2 = document.getElementById('second-pic');
-// var imgEl3 = document.getElementById('third-pic');
+var imgEl2 = document.getElementById('second-pic');
+var imgEl3 = document.getElementById('third-pic');
 //event listener on img
-imgEL.addEventListener('click', randomIMG);
+// imgEL.addEventListener('click', randomIMG);
 // imgEl2.addEventListener('click', randomIMG);
-
 // imgEl3.addEventListener('click', randomIMG);
 // callback function for event listerner to randomly display img
+function displayImage(){
+
+  var num = Math.floor(Math.random() * (imagesArray.length));
+  if (!usedImages[num]){
+      document.canvas.src = imagesArray[num];
+      usedImages[num] = true;
+      usedImagesCount++;
+      if (usedImagesCount === imagesArray.length){
+          usedImagesCount = 0;
+          usedImages = {};
+      }
+  } else {
+      displayImage();
+  }
+}
 function randomIMG(){
   // random number generator to return a number between 0- length of array. (PicturesHere.allPictures)
-  var randomINDX = Math.floor(Math.random() * PicturesHere.allPictures.length);
-  imgEL.src = PicturesHere.allPictures[randomINDX].filepath;
-}
+  var pictureLeft = Math.floor(Math.random() * PicturesHere.allPictures.length + 1);
+  if (!PicturesHere.allPictures.usedImages[pictureLeft]){
+    imgEL.src = PicturesHere.allPictures[pictureLeft].filepath;
+    PicturesHere.allPictures.imgUsed[pictureLeft] = true;
+    PicturesHere.allPictures.clicked++;
+    if (PicturesHere.allPictures.clicked === PicturesHere.allPictures.length){
+      PicturesHere.allPictures.clicked = 0;
+      PicturesHere.allPictures.imgUsed = {};
+    }
+    else{
+      randomIMG();
+    }
+    }
+//   }
+//   var pictureCenter = Math.floor(Math.random() * PicturesHere.allPictures.length + 1);
+//   var pictureRight = Math.floor(Math.random() * PicturesHere.allPictures.length + 1);
+
+  
+//   imgEl2.src = PicturesHere.allPictures[pictureCenter].filepath;
+//   imgEl3.src = PicturesHere.allPictures[pictureRight].filepath;
+//   PicturesHere.lastDisplayed[0] = imgEL;
+//   PicturesHere.lastDisplayed[1] = imgEL;
+//   PicturesHere.lastDisplayed[2] = imgEl3;
+//  }
+// }
 
 //invoke the callback on page load to show random img.
 randomIMG();
