@@ -49,7 +49,9 @@ function randomIMG(){
   var pictureLeft = Math.floor(Math.random() * PicturesHere.allPictures.length);
   var pictureCenter = Math.floor(Math.random() * PicturesHere.allPictures.length);
   var pictureRight = Math.floor(Math.random() * PicturesHere.allPictures.length);
-  while(imgEl === imgEl2 || imgEl3 || PicturesHere.allPictures.includes(imgEl) || PicturesHere.allPictures.includes(imgEl2) || PicturesHere.allPictures.includes(imgEl3)){
+  while(imgEl === imgEl2 || PicturesHere.allPictures.includes(imgEl) 
+  || imgEl2 === PicturesHere.allPictures.includes(imgEl2) 
+  || imgEl3 === PicturesHere.allPictures.includes(imgEl3)){
     pictureLeft = Math.floor(Math.random() * PicturesHere.allPictures.length);
     pictureCenter = Math.floor(Math.random() * PicturesHere.allPictures.length);
     pictureRight = Math.floor(Math.random() * PicturesHere.allPictures.length);
